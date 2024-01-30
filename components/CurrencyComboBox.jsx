@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 
 const CurrencyComboBox = ({ currencies, onSelectCurrency }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(Object.keys(currencies)[0]);
@@ -11,21 +11,15 @@ const CurrencyComboBox = ({ currencies, onSelectCurrency }) => {
   };
 
   return (
-    <View>
-      <Text>Select a Currency:</Text>
-      <Picker
-        selectedValue={selectedCurrency}
-        onValueChange={handleCurrencyChange}
-      >
-        {Object.keys(currencies).map((currencyCode) => (
-          <Picker.Item
-            key={currencyCode}
-            label={`${currencies[currencyCode].emoji} ${currencies[currencyCode].name}`}
-            value={currencyCode}
-          />
-        ))}
-      </Picker>
-    </View>
+    <RNPickerSelect
+      onValueChange={handleCurrencyChange}
+      items={Object.keys(currencies).map((currencyCode) => {
+        return {
+          label: `${currencies[currencyCode].emoji} ${currencies[currencyCode].name}`,
+          value: currencyCode
+        }
+      })}
+    />
   );
 };
 
